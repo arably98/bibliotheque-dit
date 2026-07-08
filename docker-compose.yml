@@ -11,6 +11,15 @@ services:
     volumes:
       - bibliotheque_data:/var/lib/postgresql/data
 
+  livres:
+    build: ./services/livres
+    container_name: service-livres
+    environment:
+      DATABASE_URL: postgresql://dit:dit_password@db:5432/bibliotheque
+    ports:
+      - "8001:8001"
+    depends_on:
+      - db
+
 volumes:
   bibliotheque_data:
-  
