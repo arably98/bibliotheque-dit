@@ -21,5 +21,15 @@ services:
     depends_on:
       - db
 
+  utilisateurs:
+    build: ./services/utilisateurs
+    container_name: service-utilisateurs
+    environment:
+      DATABASE_URL: postgresql://dit:dit_password@db:5432/bibliotheque
+    ports:
+      - "8002:8002"
+    depends_on:
+      - db
+
 volumes:
   bibliotheque_data:
