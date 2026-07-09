@@ -45,5 +45,17 @@ services:
       - livres
       - utilisateurs
 
+  frontend:
+    build: ./frontend
+    container_name: frontend
+    ports:
+      - "8080:80"
+    volumes:
+      - ./frontend:/usr/share/nginx/html
+    depends_on:
+      - livres
+      - utilisateurs
+      - emprunts
+
 volumes:
   bibliotheque_data:

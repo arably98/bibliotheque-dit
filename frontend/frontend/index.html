@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Bibliothèque DIT</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Bibliothèque Numérique du DIT</h1>
+    <nav>
+      <button class="onglet actif" data-cible="livres">Livres</button>
+      <button class="onglet" data-cible="utilisateurs">Utilisateurs</button>
+      <button class="onglet" data-cible="emprunts">Emprunts</button>
+    </nav>
+  </header>
+
+  <main>
+    <!-- SECTION LIVRES -->
+    <section id="livres" class="visible">
+      <h2>Ajouter un livre</h2>
+      <form id="form-livre">
+        <input id="livre-titre" placeholder="Titre" required>
+        <input id="livre-auteur" placeholder="Auteur" required>
+        <input id="livre-isbn" placeholder="ISBN" required>
+        <input id="livre-quantite" type="number" value="1" min="1">
+        <button type="submit">Ajouter</button>
+      </form>
+      <h2>Catalogue</h2>
+      <input id="recherche" placeholder="Rechercher par titre, auteur ou ISBN...">
+      <table>
+        <thead><tr><th>ID</th><th>Titre</th><th>Auteur</th><th>ISBN</th><th>Qté</th><th></th></tr></thead>
+        <tbody id="liste-livres"></tbody>
+      </table>
+    </section>
+
+    <!-- SECTION UTILISATEURS -->
+    <section id="utilisateurs">
+      <h2>Créer un utilisateur</h2>
+      <form id="form-utilisateur">
+        <input id="util-nom" placeholder="Nom complet" required>
+        <input id="util-email" type="email" placeholder="Email" required>
+        <select id="util-type">
+          <option>Etudiant</option>
+          <option>Professeur</option>
+          <option>Personnel administratif</option>
+        </select>
+        <button type="submit">Créer</button>
+      </form>
+      <h2>Liste des utilisateurs</h2>
+      <table>
+        <thead><tr><th>ID</th><th>Nom</th><th>Email</th><th>Type</th></tr></thead>
+        <tbody id="liste-utilisateurs"></tbody>
+      </table>
+    </section>
+
+    <!-- SECTION EMPRUNTS -->
+    <section id="emprunts">
+      <h2>Nouvel emprunt</h2>
+      <form id="form-emprunt">
+        <input id="emprunt-livre" type="number" placeholder="ID du livre" required>
+        <input id="emprunt-utilisateur" type="number" placeholder="ID de l'utilisateur" required>
+        <button type="submit">Emprunter</button>
+      </form>
+      <h2>Historique <button id="btn-retards" type="button">⚠️ Voir les retards</button></h2>
+      <table>
+        <thead><tr><th>ID</th><th>Livre</th><th>Utilisateur</th><th>Emprunté le</th><th>Retour prévu</th><th>Statut</th><th></th></tr></thead>
+        <tbody id="liste-emprunts"></tbody>
+      </table>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

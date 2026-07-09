@@ -2,11 +2,13 @@ from datetime import datetime, timedelta
 import os
 import httpx
 from fastapi import FastAPI, Depends, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 import models, schemas
 from database import engine, get_db
 
 models.Base.metadata.create_all(bind=engine)
+
 
 URL_SERVICE_LIVRES = os.getenv("URL_SERVICE_LIVRES", "http://localhost:8001")
 URL_SERVICE_UTILISATEURS = os.getenv("URL_SERVICE_UTILISATEURS", "http://localhost:8002")
@@ -15,6 +17,14 @@ DUREE_EMPRUNT_JOURS = 14
 app = FastAPI(
     title="Service Emprunts",
     description="Microservice de gestion des emprunts de la bibliothèque du DIT"
+)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 def ajouter_statut_retard(emprunt):
