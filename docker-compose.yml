@@ -31,5 +31,19 @@ services:
     depends_on:
       - db
 
+  emprunts:
+    build: ./services/emprunts
+    container_name: service-emprunts
+    environment:
+      DATABASE_URL: postgresql://dit:dit_password@db:5432/bibliotheque
+      URL_SERVICE_LIVRES: http://livres:8001
+      URL_SERVICE_UTILISATEURS: http://utilisateurs:8002
+    ports:
+      - "8003:8003"
+    depends_on:
+      - db
+      - livres
+      - utilisateurs
+
 volumes:
   bibliotheque_data:

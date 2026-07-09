@@ -14,7 +14,7 @@ app = FastAPI(
 def accueil():
     return {"message": "Bienvenue sur le service Livres", "statut": "en ligne"}
 
-# 1. Ajouter un livre
+# Ajouter un livre
 @app.post("/livres", response_model=schemas.LivreResponse)
 def ajouter_livre(livre: schemas.LivreCreate, db: Session = Depends(get_db)):
     existant = db.query(models.Livre).filter(models.Livre.isbn == livre.isbn).first()
@@ -26,12 +26,12 @@ def ajouter_livre(livre: schemas.LivreCreate, db: Session = Depends(get_db)):
     db.refresh(nouveau)
     return nouveau
 
-# 2. Lister les livres
+# Lister les livres
 @app.get("/livres", response_model=list[schemas.LivreResponse])
 def lister_livres(db: Session = Depends(get_db)):
     return db.query(models.Livre).all()
 
-# 3. Rechercher (par titre, auteur ou ISBN)
+# Rechercher (par titre, auteur ou ISBN)
 @app.get("/livres/recherche", response_model=list[schemas.LivreResponse])
 def rechercher_livres(q: str, db: Session = Depends(get_db)):
     return db.query(models.Livre).filter(
@@ -40,7 +40,7 @@ def rechercher_livres(q: str, db: Session = Depends(get_db)):
         | models.Livre.isbn.ilike(f"%{q}%")
     ).all()
 
-# 4. Modifier un livre
+# Modifier un livre
 @app.put("/livres/{livre_id}", response_model=schemas.LivreResponse)
 def modifier_livre(livre_id: int, livre: schemas.LivreCreate, db: Session = Depends(get_db)):
     existant = db.query(models.Livre).filter(models.Livre.id == livre_id).first()
@@ -52,7 +52,7 @@ def modifier_livre(livre_id: int, livre: schemas.LivreCreate, db: Session = Depe
     db.refresh(existant)
     return existant
 
-# 5. Supprimer un livre
+# Supprimer un livre
 @app.delete("/livres/{livre_id}")
 def supprimer_livre(livre_id: int, db: Session = Depends(get_db)):
     existant = db.query(models.Livre).filter(models.Livre.id == livre_id).first()
@@ -61,3 +61,11 @@ def supprimer_livre(livre_id: int, db: Session = Depends(get_db)):
     db.delete(existant)
     db.commit()
     return {"message": f"Livre {livre_id} supprimé"}
+
+# Consulter un livre par son id
+@app.get("/livres/{livre_id}", response_model=schemas.LivreResponse)
+def consulter_livre(livre_id: int, db: Session = Depends(get_db)):
+    existant = db.query(models.Livre).filter(models.Livre.id == livre_id).first()
+    if not existant:
+        raise HTTPException(status_code=404, detail="Livre introuvable")
+    return existant
