@@ -2,9 +2,9 @@ pipeline {
     agent any
 
     stages {
-        stage('Récupération du code') {
+        stage('Recuperation du code') {
             steps {
-                echo 'Code récupéré depuis GitHub'
+                echo 'Code recupere depuis GitHub'
                 sh 'ls -la'
             }
         }
@@ -12,20 +12,20 @@ pipeline {
         stage('Construction des images Docker') {
             steps {
                 echo 'Build des images de tous les services'
-                sh 'docker compose build'
+                sh 'docker compose -p bibliotheque-dit build'
             }
         }
 
-        stage('Déploiement') {
+        stage('Deploiement') {
             steps {
-                echo 'Déploiement avec Docker Compose'
-                sh 'docker compose up -d'
+                echo 'Deploiement avec Docker Compose'
+                sh 'docker compose -p bibliotheque-dit up -d'
             }
         }
 
-        stage('Vérification') {
+        stage('Verification') {
             steps {
-                echo 'Contrôle des conteneurs en cours'
+                echo 'Controle des conteneurs en cours'
                 sh 'docker ps'
             }
         }
@@ -33,10 +33,10 @@ pipeline {
 
     post {
         success {
-            echo 'Pipeline terminé avec succès — application déployée !'
+            echo 'Pipeline termine avec succes - application deployee !'
         }
         failure {
-            echo 'Échec du pipeline — consulter les logs ci-dessus'
+            echo 'Echec du pipeline - consulter les logs ci-dessus'
         }
     }
 }
