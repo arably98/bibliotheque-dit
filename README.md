@@ -1,4 +1,4 @@
-# 📚 Bibliothèque Numérique du DIT
+#  Bibliothèque Numérique du DIT
 
 Plateforme web de gestion de bibliothèque en **architecture microservices**, développée dans le cadre de l'examen pratique DevOps (Master 1 IA, Dakar Institute of Technology).
 
